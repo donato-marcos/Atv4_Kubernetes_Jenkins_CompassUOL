@@ -18,7 +18,7 @@ pipeline {
         stage('Build Backend') {
             steps {
                 script {
-                    backendapp = docker.build("${env.DOCKER_USER}/backend:${env.BUILD_ID}", '--no-cache -f ./backend/Dockerfile ./backend')
+                    backendapp = docker.build("${env.DOCKER_USER}/atv4_backend:${env.BUILD_ID}", '--no-cache -f ./backend/Dockerfile ./backend')
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 script {
-                    frontendapp = docker.build("${env.DOCKER_USER}/frontend:${env.BUILD_ID}", '--no-cache -f ./frontend/Dockerfile ./frontend')
+                    frontendapp = docker.build("${env.DOCKER_USER}/atv4_frontend:${env.BUILD_ID}", '--no-cache -f ./frontend/Dockerfile ./frontend')
                 }
             }
         }
