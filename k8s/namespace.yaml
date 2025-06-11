@@ -2,4 +2,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: atv4_compassuol
+  name: atv4-compassuol
