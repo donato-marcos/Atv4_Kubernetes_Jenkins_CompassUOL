@@ -54,39 +54,40 @@ pipeline {
             }
         }
 
-        stage('Deploy no Kubernetes') {
-            environment {
-                tag_version = "${env.BUILD_ID}"
-            }
+        stage('Create Namespace') {
             steps {
-
                 withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
                     sh 'kubectl apply -f k8s/namespace.yaml'
                 }
+            }
+        }
 
-
-                parallel {
-                    stage('Deploy Backend') {
-                        steps {
+        stage('Deploy Applications') {
+            parallel {
+                stage('Deploy Backend') {
+                    steps {
+                        script {
                             withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
-                                sh "sed -i 's/{{tag}}/${tag_version}/g' ./k8s/backend.yaml"
+                                sh "sed -i 's/{{tag}}/${env.BUILD_ID}/g' ./k8s/backend.yaml"
                                 sh 'kubectl apply -f k8s/backend.yaml'
                             }
                         }
                     }
-                    stage('Deploy Frontend') {
-                        steps {
+                }
+                stage('Deploy Frontend') {
+                    steps {
+                        script {
                             withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
-                                sh "sed -i 's/{{tag}}/${tag_version}/g' ./k8s/frontend.yaml"
+                                sh "sed -i 's/{{tag}}/${env.BUILD_ID}/g' ./k8s/frontend.yaml"
                                 sh 'kubectl apply -f k8s/frontend.yaml'
                             }
                         }
                     }
-                    stage('Deploy Ingress') {
-                        steps {
-                            withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
-                                sh 'kubectl apply -f k8s/ingress.yaml'
-                            }
+                }
+                stage('Deploy Ingress') {
+                    steps {
+                        withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
+                            sh 'kubectl apply -f k8s/ingress.yaml'
                         }
                     }
                 }
