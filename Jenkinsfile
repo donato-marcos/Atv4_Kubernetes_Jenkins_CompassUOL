@@ -1,11 +1,9 @@
 pipeline {
     agent any
 
-
     triggers {
         pollSCM('')
     }
-
 
     environment {
         DOCKER_REGISTRY = 'registry.hub.docker.com'
@@ -61,15 +59,36 @@ pipeline {
                 tag_version = "${env.BUILD_ID}"
             }
             steps {
+
                 withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
-                    sh "sed -i 's/{{tag}}/${tag_version}/g' ./k8s/backend.yaml"
-                    sh 'kubectl apply -f k8s/backend.yaml'
+                    sh 'kubectl apply -f k8s/namespace.yaml'
                 }
-            }
-            steps {
-                withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
-                    sh "sed -i 's/{{tag}}/${tag_version}/g' ./k8s/frontend.yaml"
-                    sh 'kubectl apply -f k8s/frontend.yaml'
+
+
+                parallel {
+                    stage('Deploy Backend') {
+                        steps {
+                            withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
+                                sh "sed -i 's/{{tag}}/${tag_version}/g' ./k8s/backend.yaml"
+                                sh 'kubectl apply -f k8s/backend.yaml'
+                            }
+                        }
+                    }
+                    stage('Deploy Frontend') {
+                        steps {
+                            withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
+                                sh "sed -i 's/{{tag}}/${tag_version}/g' ./k8s/frontend.yaml"
+                                sh 'kubectl apply -f k8s/frontend.yaml'
+                            }
+                        }
+                    }
+                    stage('Deploy Ingress') {
+                        steps {
+                            withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
+                                sh 'kubectl apply -f k8s/ingress.yaml'
+                            }
+                        }
+                    }
                 }
             }
         }
