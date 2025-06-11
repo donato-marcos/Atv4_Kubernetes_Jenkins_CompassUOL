@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Explorer | Projeto Compass</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>🔍 API Explorer</h1>
+      <p class="subtitle">Teste os endpoints da API do Projeto Compass</p>
+    </header>
+
+    <main class="app-content">
+      <section class="endpoint-section">
+        <h2>Endpoints Disponíveis</h2>
+        <div class="endpoint-grid">
+          <button class="endpoint-btn" data-endpoint="/">
+            <span class="icon">🏠</span>
+            <span>Home</span>
+          </button>
+          <button class="endpoint-btn" data-endpoint="/color">
+            <span class="icon">🎨</span>
+            <span>Random Color</span>
+          </button>
+          <button class="endpoint-btn" data-endpoint="/cat">
+            <span class="icon">🐱</span>
+            <span>Cat Image</span>
+          </button>
+          <button class="endpoint-btn" data-endpoint="/random-photo">
+            <span class="icon">📷</span>
+            <span>Random Photo</span>
+          </button>
+          <button class="endpoint-btn" data-endpoint="/time">
+            <span class="icon">⏰</span>
+            <span>Current Time</span>
+          </button>
+          <button class="endpoint-btn" data-endpoint="/joke">
+            <span class="icon">😂</span>
+            <span>Random Joke</span>
+          </button>
+          <button class="endpoint-btn" data-endpoint="/scare">
+            <span class="icon">👻</span>
+            <span>Scare!</span>
+          </button>
+          <button class="endpoint-btn" data-endpoint="/lookalike">
+            <span class="icon">👯</span>
+            <span>Lookalike</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="response-section">
+        <div class="response-header">
+          <h2>Resposta da API</h2>
+          <div class="status-indicator" id="statusIndicator"></div>
+        </div>
+        <div id="loading" class="loading-container hidden">
+          <div class="spinner"></div>
+          <p>Processando requisição...</p>
+        </div>
+        <div id="response" class="response-content">
+          <div class="placeholder">
+            <p>Selecione um endpoint acima para começar</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>© 2023 Projeto Compass UOL | Desenvolvido com FastAPI e Docker</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
