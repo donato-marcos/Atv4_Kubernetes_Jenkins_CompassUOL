@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: atv4_compassuol
+  namespace: atv4-compassuol
 spec:
   replicas: 1
   selector:
