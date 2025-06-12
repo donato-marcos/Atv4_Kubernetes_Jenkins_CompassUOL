@@ -67,6 +67,9 @@ pipeline {
         }
 
         stage('Create Namespace') {
+            when {
+                changeset "k8s/namespace.yaml"
+            }
             steps {
                 withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
                     sh 'kubectl apply -f k8s/namespace.yaml'
@@ -77,6 +80,9 @@ pipeline {
         stage('Deploy Applications') {
             parallel {
                 stage('Deploy Backend') {
+                    when {
+                        changeset "backend/**", "k8s/backend.yaml"
+                    }
                     steps {
                         script {
                             withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
@@ -87,6 +93,9 @@ pipeline {
                     }
                 }
                 stage('Deploy Frontend') {
+                    when {
+                        changeset "frontend/**", "k8s/frontend.yaml"
+                    }
                     steps {
                         script {
                             withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
@@ -97,6 +106,9 @@ pipeline {
                     }
                 }
                 stage('Deploy Ingress') {
+                    when {
+                        changeset "k8s/ingress.yaml"
+                    }
                     steps {
                         withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
                             sh 'kubectl apply -f k8s/ingress.yaml'
