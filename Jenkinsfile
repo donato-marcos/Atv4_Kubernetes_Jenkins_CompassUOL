@@ -80,6 +80,9 @@ pipeline {
         stage('Deploy Applications') {
             parallel {
                 stage('Deploy Backend') {
+                    when {
+                        changeset "backend/**", "k8s/backend.yaml"
+                    }
                     steps {
                         script {
                             withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
@@ -90,6 +93,9 @@ pipeline {
                     }
                 }
                 stage('Deploy Frontend') {
+                    when {
+                        changeset "frontend/**", "k8s/frontend.yaml"
+                    }
                     steps {
                         script {
                             withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
