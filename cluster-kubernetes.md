@@ -10,11 +10,13 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
   - [Configuração do Control-Plane](#configuração-do-control-plane)
   - [Configuração dos Worker Nodes](#configuração-dos-worker-nodes)
 - [CNI e Ingress Controller](#cni-e-ingress-controller)
+- [Próximos Passos](#próximos-passos)
 
+---
 ## Tecnologias Utilizadas
 - **Virt-manager** (KVM/QEMU/Libvirt)
 - **Kubernetes**
-
+---
 ## Especificações das Máquinas Virtuais
 
 
@@ -23,7 +25,7 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
 | control-plane | 2    | 2GB       | 25GB  | 192.168.123.100 |
 | work-node01   | 2    | 1GB~1.5GB | 25GB  | 192.168.123.101 |
 | work-node02   | 2    | 1GB~1.5GB | 25GB  | 192.168.123.102 |
-
+---
 ## Instruções de Configuração
 
 ### Pré-requisitos (Todos os Nós)
@@ -121,7 +123,7 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
    ```bash
    sudo kubeadm join <ip-do-control-plane>:6443 --token <token> --discovery-token-ca-cert-hash <hash>
    ```
-
+---
 ## CNI e Ingress Controller
 
 1. **Instalar Calico CNI**  
@@ -135,7 +137,7 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/deploy.yaml
    kubectl patch svc ingress-nginx-controller -n ingress-nginx -p '{"spec": {"type": "NodePort"}}'
    ```
-
+---
 ## Próximos Passos
 - Verifique o status do cluster com `kubectl get nodes`
 ![image](https://github.com/user-attachments/assets/50401d7d-94e6-40c8-b485-576388ce3423)
