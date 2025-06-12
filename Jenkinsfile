@@ -14,6 +14,9 @@ pipeline {
 
     stages {
         stage('Build Backend') {
+            when {
+                changeset "backend/**"
+            }
             steps {
                 script {
                     backendapp = docker.build("${env.DOCKER_USER}/atv4_backend:${env.BUILD_ID}", '--no-cache -f ./backend/Dockerfile ./backend')
@@ -22,6 +25,9 @@ pipeline {
         }
 
         stage('Build Frontend') {
+            when {
+                changeset "frontend/**"
+            }
             steps {
                 script {
                     frontendapp = docker.build("${env.DOCKER_USER}/atv4_frontend:${env.BUILD_ID}", '--no-cache -f ./frontend/Dockerfile ./frontend')
