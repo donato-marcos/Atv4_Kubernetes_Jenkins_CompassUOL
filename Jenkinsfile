@@ -81,8 +81,10 @@ pipeline {
             parallel {
                 stage('Deploy Backend') {
                     when {
-                        changeset "backend/**"
-                        changeset "k8s/backend.yaml"
+                        anyOf {
+                            changeset "backend/**"
+                            changeset "k8s/backend.yaml"
+                        }
                     }
                     steps {
                         script {
@@ -95,8 +97,10 @@ pipeline {
                 }
                 stage('Deploy Frontend') {
                     when {
-                        changeset "frontend/**"
-                        changeset "k8s/frontend.yaml"
+                        anyOf {
+                            changeset "frontend/**"
+                            changeset "k8s/frontend.yaml"
+                        }
                     }
                     steps {
                         script {
