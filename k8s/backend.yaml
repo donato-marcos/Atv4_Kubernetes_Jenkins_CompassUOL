@@ -5,7 +5,7 @@ metadata:
   name: backend
   namespace: atv4-compassuol
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: backend
