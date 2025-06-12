@@ -157,4 +157,4 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
 
 
 
-Para mais detalhes, consulte a [documentação oficial do Kubernetes](https://kubernetes.io/docs/setup/).
+Para mais detalhes, consulte a [documentação oficial do Kubernetes](https://kubernetes.io/docs/home/).
