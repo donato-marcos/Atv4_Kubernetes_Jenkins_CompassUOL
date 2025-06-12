@@ -137,16 +137,22 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
    ```
 
 ## Próximos Passos
-- Verifique o status do cluster com
-  - `kubectl get nodes`
-- Verificar pods do sistema com
-  - `kubectl get pods -n kube-system`
-- Verificar se o Ingress Controller com
-  - `kubectl get pods -n ingress-nginx`
-- Listar serviços do Ingress Controller com
-  - `kubectl get svc -n ingress-nginx`
-- Teste DNS interno
-  - `kubectl run -it --rm --image=busybox:1.28 test-dns -- nslookup kubernetes.default`
+- Verifique o status do cluster com `kubectl get nodes`
+![image](https://github.com/user-attachments/assets/50401d7d-94e6-40c8-b485-576388ce3423)
+
+- Verificar pods do sistema com `kubectl get pods -n kube-system`
+![image](https://github.com/user-attachments/assets/39d4da27-a07e-4128-b429-c7170eaf8a0d)
+
+- Verificar se o Ingress Controller com `kubectl get pods -n ingress-nginx`
+![image](https://github.com/user-attachments/assets/551c2245-1844-4fab-b8d4-c749dfa8dc0f)
+
+- Listar serviços do Ingress Controller com `kubectl get svc -n ingress-nginx`
+![image](https://github.com/user-attachments/assets/38c988b6-4594-40a1-8e4e-cebe2b8a53fc)
+
+- Teste DNS interno `kubectl run -it --rm --image=busybox:1.28 test-dns -- nslookup kubernetes.default`
+![image](https://github.com/user-attachments/assets/215e0137-8cec-4da8-b499-da6e7c2fdef3)
+
+
 
 
 Para mais detalhes, consulte a [documentação oficial do Kubernetes](https://kubernetes.io/docs/setup/).
