@@ -38,6 +38,9 @@ pipeline {
         stage('Push Images') {
             parallel {
                 stage('Push Backend') {
+                    when {
+                        changeset "backend/**"
+                    }
                     steps {
                         script {
                             docker.withRegistry("https://${env.DOCKER_REGISTRY}", env.DOCKER_CREDENTIALS) {
@@ -48,6 +51,9 @@ pipeline {
                     }
                 }
                 stage('Push Frontend') {
+                    when {
+                        changeset "frontend/**"
+                    }
                     steps {
                         script {
                             docker.withRegistry("https://${env.DOCKER_REGISTRY}", env.DOCKER_CREDENTIALS) {
