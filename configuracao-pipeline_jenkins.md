@@ -58,6 +58,11 @@
    ![008-credential_secrete-file_cluster-kubernetes](https://github.com/user-attachments/assets/ecacd875-dbe8-4fd8-ac27-28157bb199c7)
 
    - Adicione nova credencial do tipo "Secret file"
+   - No Control-Plane do cluster kubernetes utilize o comando `cat ./kube/config >> kubeconfig` e depois baixe o arquivo para sua máquina.
+
+     ![image](https://github.com/user-attachments/assets/bfa344d5-d7a3-425d-afe4-990f6514f73d)
+     - Pode usar o WinSCP para fazer isso, por exemplo
+
    - Faça upload do arquivo `kubeconfig` do seu cluster
    - ID: `kubeconfig` (como referenciado no Jenkinsfile)
 
