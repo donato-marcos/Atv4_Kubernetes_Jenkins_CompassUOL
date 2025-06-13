@@ -4,8 +4,25 @@
 Este projeto demonstra a implementação de um pipeline CI/CD utilizando Jenkins para automatizar o build, push de imagens Docker e deploy em um cluster Kubernetes. O sistema consiste em uma aplicação frontend e backend, gerenciadas através de um cluster Kubernetes configurado com kubeadm.
 
 ## Tecnologias Utilizadas
-- **Jenkins**: Automação CI/CD
+
+### **Orquestração e Containers**
 - **Kubernetes**: Orquestração de containers
+- **Docker**: Containerização das aplicações
+- **Docker Hub**: Registry para armazenamento das imagens Docker
+
+### **CI/CD**
+- **Jenkins**: Automação do pipeline de entrega contínua
+- **GitHub**: Versionamento de código e trigger de builds via webhook
+
+### **Infraestrutura**
+- **kubeadm**: Ferramenta para configuração do cluster Kubernetes
+- **Calico**: CNI (Container Network Interface)
+- **Ingress-Nginx**: Ingress Controller
+- **Virt-manager (KVM/QEMU)**: Virtualização das máquinas
+
+### **Aplicação**
+- **FastAPI**: Backend da aplicação
+- **HTML/CSS/JS**: Frontend da aplicação
 
 ## Configuração do Ambiente
 
