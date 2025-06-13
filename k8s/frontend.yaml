@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: aesthar/atv4_frontend:{{tag}}
+          image: aesthar/atv4_frontend:latest
           ports:
             - containerPort: 80
 ---
