@@ -12,7 +12,7 @@ Este guia fornece instruções para configurar um servidor Jenkins
   - [Kubectl](#kubectl)
 - [Chave de Segurança](#chave-de-segurança)
 
-- ### [Configuração do pipeline](configuração-pipeline_jenkins.md)
+- ### [Configuração do pipeline](configuracao-pipeline_jenkins.md)
 
 ---  
 
