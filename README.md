@@ -7,14 +7,6 @@ Este projeto demonstra a implementação de um pipeline CI/CD utilizando Jenkins
 - **Jenkins**: Automação CI/CD
 - **Kubernetes**: Orquestração de containers
 
-## Diagrama da Infraestrutura
-```
-[VM Jenkins] ----> [Cluster Kubernetes]
-                       ├── Control Plane
-                       ├── Worker Node 1
-                       └── Worker Node 2
-```
-
 ## Configuração do Ambiente
 
 ### Pré-requisitos
