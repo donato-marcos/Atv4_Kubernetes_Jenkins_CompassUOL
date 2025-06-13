@@ -6,6 +6,8 @@ metadata:
   namespace: atv4-compassuol
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: backend
