@@ -9,7 +9,7 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
   - [Pré-requisitos (Todos os Nós)](#pré-requisitos-todos-os-nós)
   - [Configuração do Control-Plane](#configuração-do-control-plane)
   - [Configuração dos Worker Nodes](#configuração-dos-worker-nodes)
-- [CNI e Ingress Controller](#cni-e-ingress-controller)
+- [CNI, Ingress, MetalLB e Metric Server](#cni-ingress--metallb-e-metric-server)
 - [Próximos Passos](#próximos-passos)
 
 ---
@@ -124,19 +124,93 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
    sudo kubeadm join <ip-do-control-plane>:6443 --token <token> --discovery-token-ca-cert-hash <hash>
    ```
 ---
-## CNI e Ingress Controller
+## CNI, Ingress e Monitoramento
 
-1. **Instalar Calico CNI**  
-   Execute no control-plane:  
-   ```bash
-   kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
-   ```
+### 1. Instalar Calico CNI
 
-2. **Instalar Ingress Controller**  
-   ```bash
-   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/deploy.yaml
-   kubectl patch svc ingress-nginx-controller -n ingress-nginx -p '{"spec": {"type": "NodePort"}}'
-   ```
+Execute no **control-plane**:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml
+```
+
+---
+
+### 2. Instalar Ingress Controller (NGINX)
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.3/deploy/static/provider/baremetal/deploy.yaml
+```
+
+Em seguida, aplique o patch para expor o serviço como LoadBalancer:
+
+```bash
+kubectl patch svc ingress-nginx-controller -n ingress-nginx -p '{"spec": {"type": "LoadBalancer"}}'
+```
+
+---
+
+### 3. Instalar MetalLB (para LoadBalancer em ambiente bare-metal)
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.15.2/config/manifests/metallb-native.yaml
+```
+**metallb-config.yaml:**
+```yaml
+#metallb-config.yaml
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.123.99/32
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: default-advertisement
+  namespace: metallb-system
+```
+
+Crie o arquivo acime e aplique com:
+
+```bash
+kubectl apply -f metallb-config.yaml
+```
+Após isso configure adicione o endereço ao */etc/hosts* para a tradução de nomes:
+
+```bash
+echo "192.168.123.99 frontend.aesthar.com.br" | sudo tee -a /etc/host
+```
+---
+
+### 4. Instalar e Configurar o Metrics Server
+
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
+Edite o deployment:
+
+```bash
+kubectl edit deployment metrics-server -n kube-system
+```
+
+Adicione as seguintes `args` na seção do container:
+
+```yaml
+args:
+- --kubelet-insecure-tls
+- --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+```
+
+Após salvar e sair, reinicie o deployment:
+
+```bash
+kubectl rollout restart deployment metrics-server -n kube-system
+```
 ---
 ## Próximos Passos
 - Verifique o status do cluster com `kubectl get nodes`
