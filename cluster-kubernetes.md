@@ -9,7 +9,7 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
   - [Pré-requisitos (Todos os Nós)](#pré-requisitos-todos-os-nós)
   - [Configuração do Control-Plane](#configuração-do-control-plane)
   - [Configuração dos Worker Nodes](#configuração-dos-worker-nodes)
-- [CNI, Ingress, MetalLB e Metric Server](#cni-ingress--metallb-e-metric-server)
+- [CNI, Ingress, MetalLB e Metric Server](#cni-ingress-metallb-e-metric-server)
 - [Próximos Passos](#próximos-passos)
 
 ---
