@@ -124,7 +124,7 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
    sudo kubeadm join <ip-do-control-plane>:6443 --token <token> --discovery-token-ca-cert-hash <hash>
    ```
 ---
-## CNI, Ingress e Monitoramento
+## CNI, Ingress, MetalLB e Metric Server
 
 ### 1. Instalar Calico CNI
 
