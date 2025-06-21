@@ -223,7 +223,7 @@ kubectl rollout restart deployment metrics-server -n kube-system
 ![image](https://github.com/user-attachments/assets/551c2245-1844-4fab-b8d4-c749dfa8dc0f)
 
 - Listar serviços do Ingress Controller com `kubectl get svc -n ingress-nginx`
-![image](https://github.com/user-attachments/assets/38c988b6-4594-40a1-8e4e-cebe2b8a53fc)
+![image](https://github.com/user-attachments/assets/abc8e409-a3c4-402f-82f7-01f44b9fd73b)
 
 - Teste DNS interno `kubectl run -it --rm --image=busybox:1.28 test-dns -- nslookup kubernetes.default`
 ![image](https://github.com/user-attachments/assets/215e0137-8cec-4da8-b499-da6e7c2fdef3)
