@@ -101,7 +101,8 @@ Após a execução, é possível verificar:
 ## 8. Verificação da Aplicação
 
 Após o deploy bem-sucedido, a aplicação estará disponível conforme mostrado na imagem:
-![014-app-funcionando](https://github.com/user-attachments/assets/51b2ad6f-423d-4463-bdd3-8a90b03ade08)
+![014-app-funcionando](https://github.com/user-attachments/assets/202dbbc4-310c-4453-a3c5-da76d0c95fed)
+
 
 
 ## Observações
