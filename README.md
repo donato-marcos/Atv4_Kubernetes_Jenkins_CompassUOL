@@ -80,3 +80,9 @@ Este projeto demonstra a implementação de um pipeline CI/CD utilizando Jenkins
 2. **Configurar o Jenkins**:
    
    Seguir instruções em [jenkins](jenkins.md)
+
+3. **Configurar o Jenkins**:
+   
+   Seguir instruções em [configuracao-pipeline_jenkins](configuracao-pipeline_jenkins.md)
+
+   
