@@ -174,7 +174,7 @@ metadata:
   namespace: metallb-system
 ```
 
-Crie o arquivo acime e aplique com:
+Crie o [arquivo acima](k8s/metallb-config.yaml) e aplique com:
 
 ```bash
 kubectl apply -f metallb-config.yaml
@@ -183,6 +183,7 @@ Após isso configure adicione o endereço ao */etc/hosts* para a tradução de n
 
 ```bash
 echo "192.168.123.99 frontend.aesthar.com.br" | sudo tee -a /etc/host
+echo "192.168.123.99 backend.aesthar.com.br" | sudo tee -a /etc/host
 ```
 ---
 
