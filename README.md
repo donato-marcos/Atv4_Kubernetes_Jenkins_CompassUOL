@@ -18,6 +18,8 @@ Este projeto demonstra a implementação de um pipeline CI/CD utilizando Jenkins
 - **kubeadm**: Ferramenta para configuração do cluster Kubernetes
 - **Calico**: CNI (Container Network Interface)
 - **Ingress-Nginx**: Ingress Controller
+- **MetalLB**: LoadBalancer bare-metal
+- **Metrics Server**: Monitoramento interno
 - **Virt-manager (KVM/QEMU)**: Virtualização das máquinas
 
 ### **Aplicação**
