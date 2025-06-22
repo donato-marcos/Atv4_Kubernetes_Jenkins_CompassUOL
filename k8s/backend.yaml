@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: aesthar/atv4_backend:latest
+          image: aesthar/atv4_backend:{{tag}}
           ports:
             - containerPort: 8000
           resources:
