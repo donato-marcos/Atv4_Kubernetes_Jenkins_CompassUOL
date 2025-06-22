@@ -10,7 +10,7 @@ pipeline {
         DOCKER_USER = 'aesthar'
         DOCKER_CREDENTIALS = 'dockerhub'
         KUBE_CREDENTIALS = 'kubeconfig'
-        CURRENT_DATE = sh(script: 'date +%Y/%m/%d', returnStdout: true).trim()
+        CURRENT_DATE = sh(script: 'date +%Y%m%d', returnStdout: true).trim()
     }
 
     stages {
