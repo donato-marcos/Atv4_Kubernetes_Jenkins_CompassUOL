@@ -180,7 +180,7 @@ Crie o [arquivo acima](k8s/metallb-config.yaml) e aplique com:
 kubectl apply -f metallb-config.yaml
 ```
 Após isso configure adicione o endereço ao */etc/hosts* para a tradução de nomes:
-
+Esse cofiguração deverá ser feita no PC que irá acessar a página.
 ```bash
 echo "192.168.123.99 frontend.aesthar.com.br" | sudo tee -a /etc/host
 echo "192.168.123.99 backend.aesthar.com.br" | sudo tee -a /etc/host
