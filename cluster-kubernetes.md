@@ -25,6 +25,9 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
 | control-plane | 2    | 2GB       | 25GB  | 192.168.123.100 |
 | work-node01   | 2    | 1GB~1.5GB | 25GB  | 192.168.123.101 |
 | work-node02   | 2    | 1GB~1.5GB | 25GB  | 192.168.123.102 |
+
+*Também vamos usar o endereço `192.168.123.99` para o `LoadBalance MetalLB` que seria visto mais a frente.
+
 ---
 ## Instruções de Configuração
 
