@@ -18,7 +18,7 @@ pipeline {
         stage('Detect Tags from Kubernetes') {
             steps {
                 script {
-                    env.NAMESPACE
+                    env.NAMESPACE = 'atv4-compassuol'
                     withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
                         env.BACKEND_TAG = sh(
                             script: "kubectl get deployment backend -n ${env.NAMESPACE} -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null | cut -d: -f2 || true",
