@@ -44,8 +44,12 @@ pipeline {
                     env.BACKEND_HASH = sh(script: 'git log -n 1 --pretty=format:%h -- backend/', returnStdout: true).trim()
                     env.BACKEND_BUILT = "false"
 
+                    echo "Hash atual no github (backend): ${env.BACKEND_HASH}"
+
                     env.FRONTEND_HASH = sh(script: 'git log -n 1 --pretty=format:%h -- frontend/', returnStdout: true).trim()
                     env.FRONTEND_BUILT = "false"
+
+                    echo "Hash atual no github (frontend): ${env.FRONTEND_HASH}"
                 }
             }
         }

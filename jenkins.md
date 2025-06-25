@@ -30,12 +30,6 @@ Este guia fornece instruções para configurar um servidor Jenkins
 
 ## Guia de Instalação
 
-### Java (JDK 17)
-Para instalar o Java JDK 17, execute o comando:
-```bash
-sudo apt update && sudo apt install openjdk-17-jdk -y
-```
-
 ### Jenkins
 Siga os passos abaixo para instalar o Jenkins:
 
@@ -54,6 +48,12 @@ Siga os passos abaixo para instalar o Jenkins:
    ```bash
    sudo apt-get update && sudo apt-get install -y jenkins
    ```
+
+### Java (JDK 21)
+Para instalar o Java JDK 21, execute o comando:
+```bash
+sudo apt update && sudo apt install -y openjdk-21-jre
+```
 
 ### Docker
 Siga os passos abaixo para instalar o Docker:
@@ -100,13 +100,13 @@ Siga os passos abaixo para instalar o kubectl:
    sudo apt-get update
    sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
 
-   curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+   curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
    sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
    ```
 
 2. Adicione o repositório do Kubernetes:
    ```bash
-   echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+   echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
    sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
    ```
 
