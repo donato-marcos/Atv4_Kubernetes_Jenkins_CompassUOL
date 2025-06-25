@@ -14,36 +14,70 @@ pipeline {
     }
 
     stages {
+
+        stage('Detect Tags from Kubernetes') {
+            steps {
+                script {
+                    env.NAMESPACE
+                    withKubeConfig([credentialsId: env.KUBE_CREDENTIALS]) {
+                        env.BACKEND_TAG = sh(
+                            script: "kubectl get deployment backend -n ${env.NAMESPACE} -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null | cut -d: -f2 || true",
+                            returnStdout: true
+                        ).trim()
+
+                        echo "Tag atual no cluster (backend): ${env.BACKEND_TAG}"
+
+                        env.FRONTEND_TAG = sh(
+                            script: "kubectl get deployment frontend -n ${env.NAMESPACE} -o jsonpath='{.spec.template.spec.containers[0].image}' 2>/dev/null | cut -d: -f2 || true",
+                            returnStdout: true
+                        ).trim()
+
+                        echo "Tag atual no cluster (frontend): ${env.FRONTEND_TAG}"
+                    }
+                }
+            }
+        }
+
         stage('Get Commit Hashes') {
             steps {
                 script {
                     env.BACKEND_HASH = sh(script: 'git log -n 1 --pretty=format:%h -- backend/', returnStdout: true).trim()
+                    env.BACKEND_BUILT = "false"
+
                     env.FRONTEND_HASH = sh(script: 'git log -n 1 --pretty=format:%h -- frontend/', returnStdout: true).trim()
-                    
-                    env.BACKEND_TAG = "${env.CURRENT_DATE}-${env.BACKEND_HASH}"
-                    env.FRONTEND_TAG = "${env.CURRENT_DATE}-${env.FRONTEND_HASH}"
+                    env.FRONTEND_BUILT = "false"
                 }
             }
         }
 
         stage('Build Backend') {
             when {
-                changeset "backend/**"
+                anyOf {
+                    changeset "backend/**"
+                    expression { return !env.BACKEND_TAG }
+                }
             }
             steps {
                 script {
+                    env.BACKEND_TAG = "${env.CURRENT_DATE}-${env.BACKEND_HASH}-${env.BUILD_NUMBER}"
                     backendapp = docker.build("${env.DOCKER_USER}/atv4_backend:${env.BACKEND_TAG}", '--no-cache -f ./backend/Dockerfile ./backend')
+                    env.BACKEND_BUILT = "true"
                 }
             }
         }
 
         stage('Build Frontend') {
             when {
-                changeset "frontend/**"
+                anyOf {
+                    changeset "frontend/**"
+                    expression { return !env.FRONTEND_TAG }
+                }
             }
             steps {
                 script {
+                    env.FRONTEND_TAG = "${env.CURRENT_DATE}-${env.FRONTEND_HASH}-${env.BUILD_NUMBER}"
                     frontendapp = docker.build("${env.DOCKER_USER}/atv4_frontend:${env.FRONTEND_TAG}", '--no-cache -f ./frontend/Dockerfile ./frontend')
+                    env.FRONTEND_BUILT = "true"
                 }
             }
         }
@@ -52,7 +86,7 @@ pipeline {
             parallel {
                 stage('Push Backend') {
                     when {
-                        changeset "backend/**"
+                        expression { return env.BACKEND_BUILT == "true" }
                     }
                     steps {
                         script {
@@ -65,7 +99,7 @@ pipeline {
                 }
                 stage('Push Frontend') {
                     when {
-                        changeset "frontend/**"
+                        expression { return env.FRONTEND_BUILT == "true" }
                     }
                     steps {
                         script {
@@ -95,8 +129,8 @@ pipeline {
                 stage('Deploy Backend') {
                     when {
                         anyOf {
-                            changeset "backend/**"
                             changeset "k8s/backend.yaml"
+                            expression { return env.BACKEND_BUILT == "true" }
                         }
                     }
                     steps {
@@ -108,11 +142,12 @@ pipeline {
                         }
                     }
                 }
+
                 stage('Deploy Frontend') {
                     when {
                         anyOf {
-                            changeset "frontend/**"
                             changeset "k8s/frontend.yaml"
+                            expression { return env.FRONTEND_BUILT == "true" }
                         }
                     }
                     steps {
@@ -124,6 +159,7 @@ pipeline {
                         }
                     }
                 }
+
                 stage('Deploy Ingress') {
                     when {
                         changeset "k8s/ingress.yaml"
