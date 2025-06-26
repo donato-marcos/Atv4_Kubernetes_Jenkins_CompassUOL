@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
       case '/lookalike':
         const key = Object.keys(data)[0];
         content = `
-          <img class="api-image" src="\${data[key]}" alt="API response image">
+          <img class="api-image" src="${data[key]}" alt="API response image">
           <div style="text-align: center; margin-top: 12px;">
             <button class="refresh-btn" type="button" onclick="window.location.reload()">
               <i class="fas fa-sync-alt"></i> Refresh
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       default:
         content = `
-          <div class="pre-formatted">\${JSON.stringify(data, null, 2)}</div>
+          <div class="pre-formatted">${JSON.stringify(data, null, 2)}</div>
         `;
     }
 
