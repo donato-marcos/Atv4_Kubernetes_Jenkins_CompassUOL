@@ -1,28 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Theme management
-  const themeToggle = document.getElementById('themeToggle');
-  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-  let currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
-
-  // Apply saved theme or system preference
-  document.body.setAttribute('data-theme', currentTheme);
-
-  // Theme toggle button functionality
-  themeToggle.addEventListener('click', () => {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-    document.body.setAttribute('data-theme', currentTheme);
-    localStorage.setItem('theme', currentTheme);
-  });
-
-  // Watch for system theme changes
-  prefersDarkScheme.addListener(e => {
-    if (!localStorage.getItem('theme')) {
-      currentTheme = e.matches ? 'dark' : 'light';
-      document.body.setAttribute('data-theme', currentTheme);
-    }
-  });
-
-  // API interaction
+document.addEventListener('DOMContentLoaded', function () {
   const buttons = document.querySelectorAll('.endpoint-card');
   const responseDiv = document.getElementById('response');
   const loadingDiv = document.getElementById('loading');
@@ -30,14 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const responseMeta = document.getElementById('responseMeta');
 
   buttons.forEach(button => {
-    button.addEventListener('click', async function() {
+    button.addEventListener('click', async function (event) {
+      event.preventDefault();
       const endpoint = this.getAttribute('data-endpoint');
       await callApi(endpoint);
     });
   });
 
   async function callApi(endpoint) {
-    // Show loading state
     loadingDiv.classList.remove('hidden');
     responseDiv.innerHTML = '';
     statusIndicator.classList.remove('active');
@@ -47,13 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const response = await fetch(`/api${endpoint}`);
       const duration = (performance.now() - startTime).toFixed(0);
 
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
 
       const data = await response.json();
-
-      // Update UI
       statusIndicator.classList.add('active');
       responseMeta.textContent = `${response.status} • ${duration}ms`;
       displayResponse(data, endpoint);
@@ -93,9 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
       case '/lookalike':
         const key = Object.keys(data)[0];
         content = `
-          <img class="api-image" src="${data[key]}" alt="API response image">
+          <img class="api-image" src="\${data[key]}" alt="API response image">
           <div style="text-align: center; margin-top: 12px;">
-            <button class="refresh-btn" onclick="window.location.reload()">
+            <button class="refresh-btn" type="button" onclick="window.location.reload()">
               <i class="fas fa-sync-alt"></i> Refresh
             </button>
           </div>
@@ -104,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       default:
         content = `
-          <div class="pre-formatted">${JSON.stringify(data, null, 2)}</div>
+          <div class="pre-formatted">\${JSON.stringify(data, null, 2)}</div>
         `;
     }
 
