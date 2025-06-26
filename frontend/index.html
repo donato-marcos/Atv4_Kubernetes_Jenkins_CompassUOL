@@ -3,78 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ATV4 | Kubernetes e Jenkins | Projeto Compass</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+  <title>API Explorer | Kubernetes & Jenkins | CompassUOL</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app-container">
     <header class="app-header">
-      <h1>🔍 ATV4 | Kubernetes e Jenkins | Projeto Compass v6</h1>
-      <p class="subtitle">Teste os endpoints da API do Projeto Compass</p>
+      <div class="header-content">
+        <h1>
+          <i class="fas fa-rocket"></i>
+          <span>ATV4 | Kubernetes e Jenkins | CompassUOL</span>
+        </h1>
+        <p class="subtitle">Teste os endpoints da API Compass</p>
+      </div>
+      <button id="themeToggle" class="theme-toggle" aria-label="Alternar tema">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+      </button>
     </header>
 
     <main class="app-content">
       <section class="endpoint-section">
-        <h2>Endpoints Disponíveis</h2>
+        <div class="section-header">
+          <h2><i class="fas fa-plug"></i> Endpoints</h2>
+          <div class="status-indicator" id="statusIndicator"></div>
+        </div>
         <div class="endpoint-grid">
-          <button class="endpoint-btn" data-endpoint="/">
-            <span class="icon">🏠</span>
-            <span>Home</span>
+          <button class="endpoint-card" data-endpoint="/">
+            <div class="card-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <span class="card-title">Home</span>
           </button>
-          <button class="endpoint-btn" data-endpoint="/color">
-            <span class="icon">🎨</span>
-            <span>Random Color</span>
+          <button class="endpoint-card" data-endpoint="/color">
+            <div class="card-icon">
+              <i class="fas fa-palette"></i>
+            </div>
+            <span class="card-title">Random Color</span>
           </button>
-          <button class="endpoint-btn" data-endpoint="/cat">
-            <span class="icon">🐱</span>
-            <span>Cat Image</span>
+          <button class="endpoint-card" data-endpoint="/cat">
+            <div class="card-icon">
+              <i class="fas fa-cat"></i>
+            </div>
+            <span class="card-title">Cat Image</span>
           </button>
-          <button class="endpoint-btn" data-endpoint="/random-photo">
-            <span class="icon">📷</span>
-            <span>Random Photo</span>
+          <button class="endpoint-card" data-endpoint="/random-photo">
+            <div class="card-icon">
+              <i class="fas fa-camera"></i>
+            </div>
+            <span class="card-title">Random Photo</span>
           </button>
-          <button class="endpoint-btn" data-endpoint="/time">
-            <span class="icon">⏰</span>
-            <span>Current Time</span>
+          <button class="endpoint-card" data-endpoint="/time">
+            <div class="card-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <span class="card-title">Current Time</span>
           </button>
-          <button class="endpoint-btn" data-endpoint="/joke">
-            <span class="icon">😂</span>
-            <span>Random Joke</span>
+          <button class="endpoint-card" data-endpoint="/joke">
+            <div class="card-icon">
+              <i class="fas fa-laugh-squint"></i>
+            </div>
+            <span class="card-title">Random Joke</span>
           </button>
-          <button class="endpoint-btn" data-endpoint="/scare">
-            <span class="icon">👻</span>
-            <span>Scare!</span>
+          <button class="endpoint-card" data-endpoint="/scare">
+            <div class="card-icon">
+              <i class="fas fa-ghost"></i>
+            </div>
+            <span class="card-title">Scare!</span>
           </button>
-          <button class="endpoint-btn" data-endpoint="/lookalike">
-            <span class="icon">👯</span>
-            <span>Lookalike</span>
+          <button class="endpoint-card" data-endpoint="/lookalike">
+            <div class="card-icon">
+              <i class="fas fa-user-friends"></i>
+            </div>
+            <span class="card-title">Lookalike</span>
           </button>
         </div>
       </section>
 
       <section class="response-section">
-        <div class="response-header">
-          <h2>Resposta da API</h2>
-          <div class="status-indicator" id="statusIndicator"></div>
+        <div class="section-header">
+          <h2><i class="fas fa-server"></i> API Response</h2>
+          <div class="response-meta" id="responseMeta"></div>
         </div>
-        <div id="loading" class="loading-container hidden">
-          <div class="spinner"></div>
-          <p>Processando requisição...</p>
-        </div>
-        <div id="response" class="response-content">
-          <div class="placeholder">
-            <p>Selecione um endpoint acima para começar</p>
+        <div class="response-container">
+          <div id="loading" class="loading-container hidden">
+            <div class="spinner"></div>
+            <p>Processing request...</p>
+          </div>
+          <div id="response" class="response-content">
+            <div class="placeholder">
+              <i class="fas fa-mouse-pointer"></i>
+              <p>Select an endpoint to begin</p>
+            </div>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="app-footer">
-      <p>© 2025 Projeto Compass UOL | Desenvolvido com FastAPI e Docker</p>
+      <p>© 2025 Projeto Compass UOL </p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <img src="icons/github.svg" alt="GitHub" class="custom-icon">
+        </a>
+        <a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer" aria-label="Docker">
+          <img src="icons/docker.svg" alt="Docker" class="custom-icon">
+        </a>
+        <a href="https://kubernetes.io/" target="_blank" rel="noopener noreferrer" aria-label="Kubernetes">
+          <img src="icons/kubernetes.svg" alt="Kubernetes" class="custom-icon">
+        </a>
+        <a href="https://www.jenkins.io/" target="_blank" rel="noopener noreferrer" aria-label="Jenkins">
+          <img src="icons/jenkins.svg" alt="Jenkins" class="custom-icon">
+        </a>
+        <a href="https://www.linux.org/" target="_blank" rel="noopener noreferrer" aria-label="Linux">
+          <img src="icons/linux.svg" alt="Linux" class="custom-icon">
+        </a>
+        <a href="https://www.ubuntu.com/" target="_blank" rel="noopener noreferrer" aria-label="Libvirt">
+          <img src="icons/ubuntu.svg" alt="Ubuntu" class="custom-icon">
+        </a>
+        <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" aria-label="VS Code">
+          <img src="icons/vscode.svg" alt="VS Code" class="custom-icon">
+        </a>
+      </div>
     </footer>
   </div>
 
-  <script src="script.js"></script>
+  <script src="theme.js"></script>
+  <script src="api.js"></script>
 </body>
 </html>
