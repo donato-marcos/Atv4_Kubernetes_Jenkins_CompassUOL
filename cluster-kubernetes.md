@@ -65,6 +65,7 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
    net.bridge.bridge-nf-call-ip6tables = 1
    EOF
    sudo sysctl --system
+   sudo sysctl --system | grep "forward|ip.*tables"
    ```
 
 5. **Instalar Containerd**  
@@ -86,6 +87,7 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
    containerd config default | sudo tee /etc/containerd/config.toml
    sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
    sudo systemctl restart containerd
+   sudo grep "SystemCgroup" /etc/containerd/config.toml
    ```
 
 7. **Instalar Ferramentas do Kubernetes**  
@@ -113,7 +115,14 @@ Este guia fornece instruções para configurar um cluster Kubernetes usando kube
    sudo chown $(id -u):$(id -g) $HOME/.kube/config
    ```
 
-3. **Gerar Comando de Join**  
+3. **Configurar bash-completion**
+   ```
+   sudo apt -y install bash-completion
+   echo "source <(kubectl completion bash) >> ~/.bashrc"
+   source ~/.bashrc
+   ```
+
+4. **Gerar Comando de Join**  
    ```bash
    kubeadm token create --print-join-command
    ```
