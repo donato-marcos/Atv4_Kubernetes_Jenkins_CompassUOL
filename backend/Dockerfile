@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8000
 
 # Comando para rodar
-CMD ["uvicorn", "main:app", "--host", "::"--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "::", "--port", "8000"]
