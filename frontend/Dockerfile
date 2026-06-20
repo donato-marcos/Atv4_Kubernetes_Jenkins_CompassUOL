@@ -1,10 +1,10 @@
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
-# Copie os arquivos estáticos diretamente
-COPY . .
+COPY --chown=nginx:nginx ./public .
 
-# Copie a configuração customizada do Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN chmod -R 755 /usr/share/nginx/html
+
+COPY default.conf.template /etc/nginx/templates/default.conf.template
 
 EXPOSE 80
