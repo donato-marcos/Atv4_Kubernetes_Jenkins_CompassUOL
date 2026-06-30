@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine3.23
+FROM nginx:stable-alpine3.23-slim
 
 WORKDIR /usr/share/nginx/html
 
@@ -12,9 +12,5 @@ RUN chown -R nginx:nginx /usr/share/nginx/html && \
 
 # Templates do Nginx com substituição de variáveis
 COPY default.conf.template /etc/nginx/templates/default.conf.template
-
-# Healthcheck para o orquestrador
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -I http://localhost || exit 1
 
 EXPOSE 80
